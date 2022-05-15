@@ -1,5 +1,8 @@
 pipeline {  
-    agent any  
+    agent any
+    environment{
+        path=' C:/Program Files/apache-maven-3.8.5-bin/apache-maven-3.8.5/bin'
+    }
     stages {  
             stage ('Git-Checkout') {  
                 steps{
@@ -9,23 +12,17 @@ pipeline {
             }
             stage ('Compile') {  
                   steps{
-                    bat label: '', script: 'mvn compile'
-                    echo "test successful"; 
+                    sh 'mvn compile'
+                    echo "test successful";
                 } 
             }
-            stage ('Build') {  
+             stage ('Build') {  
                   steps{
-                    bat label: '', script: 'mvn clean'
-                    bat label: '', script: 'mvn package'
+                    sh 'mvn clean package'
                     echo "build successful";
                 } 
             }
-             stage('SonarQube analysis') {
-               withSonarQubeEnv('SonarQube-9.4') {
-              sh 'mvn sonar:sonar'
-                } // submitted SonarQube taskId is automatically attached to the pipeline context
-            }
+            
         }
- 
-    }
-}
+      
+   }
