@@ -10,8 +10,7 @@ pipeline {
             stage ('Compile') {  
                   steps{
                     bat label: '', script: 'mvn compile'
-                    echo "test successful";
-                    
+                    echo "test successful"; 
                 } 
             }
             stage ('Build') {  
@@ -19,7 +18,6 @@ pipeline {
                     bat label: '', script: 'mvn clean'
                     bat label: '', script: 'mvn package'
                     echo "build successful";
-                    
                 } 
             }
              stage('SonarQube analysis') {
