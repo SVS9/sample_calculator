@@ -22,23 +22,12 @@ pipeline {
                     
                 } 
             }
-             stage ('Test') {  
-                  steps{
-                    bat label: '', script: 'mvn test'
-                    echo "test successful";
-                } 
-            }
-            
-        stage ('Deploy') {
-            steps{
-            deploy adapters: [tomcat9(credentialsId: '0ec60cd3-c147-467b-bc23-ceabd7954e28', path: '', url: 'http://localhost:8081/')], contextPath: 'jenkins_calci', onFailure: false, war: '**/*.war'
-             echo "Deploy successful";
+             stage('SonarQube analysis') {
+               withSonarQubeEnv('SonarQube-9.4') {
+              sh 'mvn sonar:sonar'
+                } // submitted SonarQube taskId is automatically attached to the pipeline context
             }
         }
-        stage ('Monitor') { 
-           steps{ 
-             echo "Now you can monitor!";
-           }
-        }
+ 
     }
 }
