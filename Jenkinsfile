@@ -1,5 +1,5 @@
 pipeline {  
-    agent{ label 'windows2' } 
+    agent any 
     stages {  
             stage ('Git-Checkout') {  
                 steps{
